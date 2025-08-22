@@ -1,0 +1,12 @@
+name: "✨ Feature request"
+labels: ["type/feature"]
+body:
+  - type: textarea
+    id: problem
+    attributes: { label: Problem to solve }
+  - type: textarea
+    id: acceptance
+    attributes: { label: Acceptance criteria, value: "- [ ] ..." }
+  - type: textarea
+    id: impact
+    attributes: { label: Catalog/Schema impact (new params, reuseId, validation) }

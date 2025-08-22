@@ -16,4 +16,4 @@ Planning docs and GitHub repository artifacts. Implementation happens in separat
 7. MECM (baseline)  
 8. MVP Polish & Docs Freeze
 
-See (MVP-Increment-Plans.md)[docs/MVP-Increment-Plans.md] and **Increment-1-Plan.md** for details.
+See [MVP-Increment-Plans.md](docs/MVP-Increment-Plans.md) and [Increment-1-Plan.md](Increment-1-Plan.md) for details.

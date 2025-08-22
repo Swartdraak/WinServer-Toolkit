@@ -1,6 +1,34 @@
 name: "🧹 Tech debt"
+description: Track refactors, cleanups, and maintenance tasks.
+title: "[Tech Debt]: "
 labels: ["type/tech-debt"]
+assignees: []
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to track codebase cleanups and refactors.
   - type: textarea
     id: context
-    attributes: { label: What and why }
+    attributes:
+      label: Context
+      description: What and why?
+      placeholder: Describe the debt and its impact.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan / scope
+      description: What needs to be changed and how?
+      placeholder: Outline the approach and non-goals.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ] ...
+    validations:
+      required: false

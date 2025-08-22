@@ -1,12 +1,53 @@
 name: "✨ Feature request"
+description: Propose a new feature or enhancement.
+title: "[Feature]: "
 labels: ["type/feature"]
+assignees: []
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement! Please provide as much detail as you can.
   - type: textarea
     id: problem
-    attributes: { label: Problem to solve }
+    attributes:
+      label: Problem to solve
+      description: What is the user need or problem?
+      placeholder: Describe the pain point.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should the tool do?
+      placeholder: Describe the solution or user story.
+    validations:
+      required: true
   - type: textarea
     id: acceptance
-    attributes: { label: Acceptance criteria, value: "- [ ] ..." }
+    attributes:
+      label: Acceptance criteria
+      description: Define how we know this is done.
+      value: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
   - type: textarea
     id: impact
-    attributes: { label: Catalog/Schema impact (new params, reuseId, validation) }
+    attributes:
+      label: Catalog/Schema impact
+      description: New params, reuseId, validation, or schema changes?
+      placeholder: e.g., Add wsus.content_path (path, required), reuseId=content.root
+    validations:
+      required: false
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I linked related issues/discussions
+          required: false
+        - label: I considered offline/secret handling constraints
+          required: false

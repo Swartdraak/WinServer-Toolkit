@@ -1,28 +1,74 @@
 name: "🐛 Bug report"
-labels: ["type/bug","prio/triage"]
+description: Report a bug in WinServer-Toolkit.
+title: "[Bug]: "
+labels: ["type/bug", "prio/triage"]
+assignees: []
 body:
-  - type: textarea
-    id: desc
-    attributes: { label: What happened?, description: Include expected vs actual. }
-    validations: { required: true }
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        Please include redacted logs and `-WhatIf` output if possible.
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we reach you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
   - type: dropdown
     id: os
-    attributes: { label: Windows Server version, options: ["2019","2022"] }
+    attributes:
+      label: Windows Server version
+      description: What version are you running?
+      options:
+        - 2019
+        - 2022
+      default: 0
+    validations:
+      required: true
   - type: input
     id: commit
-    attributes: { label: Toolkit version / commit }
+    attributes:
+      label: Toolkit version / commit
+      description: Commit hash or release tag
+      placeholder: ex. a1b2c3d or v0.1.0
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen.
+      placeholder: Describe the issue and expected outcome.
+    validations:
+      required: true
   - type: textarea
     id: repro
-    attributes: { label: Repro steps }
+    attributes:
+      label: Reproduction steps
+      description: Step-by-step instructions to reproduce the issue.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
   - type: textarea
     id: logs
-    attributes: { label: Relevant logs (-WhatIf or run), render: shell }
+    attributes:
+      label: Relevant log output
+      description: Paste any relevant log output. This will be formatted automatically.
+      render: shell
+    validations:
+      required: false
   - type: checkboxes
     id: checks
     attributes:
       label: Pre-submit checks
       options:
-        - label: Searched existing issues/discussions
+        - label: I searched existing issues and discussions
           required: true
-        - label: Reproduced with `-WhatIf` and captured logs
-          required: true
+        - label: I reproduced with `-WhatIf` and captured logs (if applicable)
+          required: false

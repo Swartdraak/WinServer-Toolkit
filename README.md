@@ -1,5 +1,7 @@
 # WinServer-Toolkit (Planning Artifacts)
 
+> 📘 **Canonical docs live in the Wiki.** Start here → https://github.com/swartdraak/winserver-toolkit/wiki
+
 **Purpose**  
 Security-first, Server Core–friendly toolkit to template and build Windows Server hosts using an interactive wizard, strict schemas, and STIG enforcement by default.
 

@@ -1,0 +1,25 @@
+# Labels (names/colors)
+type/bug #D73A4A
+type/feature #0E8A16
+type/docs #0366D6
+type/tech-debt #FBCA04
+type/test #5319E7
+area/archetypes #1F6FEB
+area/templating #0969DA
+area/security #A40E26
+area/schema #8250DF
+area/logging #8B949E
+area/ci #0EA5E9
+area/roles-dc-dns #3FB950
+area/roles-wsus #2F81F7
+area/roles-fs #1F6FEB
+area/roles-sql #0EA5E9
+area/roles-mecm #58A6FF
+prio/now #B60205
+prio/next #E99695
+prio/later #F9D0C4
+status/needs-info #D4C5F9
+status/blocked #BFDADC
+status/ready #A2EEEF
+good-first-issue #7057FF
+help-wanted #008672

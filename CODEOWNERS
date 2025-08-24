@@ -1,0 +1,8 @@
+# CODEOWNERS for WinServer-Toolkit
+* @Swartdraak
+/archetypes/ @Swartdraak
+/config/ @Swartdraak
+/scripts/entrypoints/ @Swartdraak
+/lib/ @Swartdraak
+/tests/ @Swartdraak
+/.github/ @Swartdraak

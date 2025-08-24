@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WinServer-Toolkit settings schema",
+  "type": "object",
+  "properties": {
+    "global": {
+      "type": "object",
+      "properties": {
+        "Org": { "type": "string" },
+        "Environment": { "type": "string" },
+        "ArtifactStageRoot": { "type": "string" },
+        "AllowDownloads": { "type": "boolean" },
+        "Proxy": { "type": "object", "properties": { "Http": { "type": "string" }, "Https": { "type": "string" } }, "additionalProperties": false }
+      },
+      "required": ["Org","Environment","ArtifactStageRoot"],
+      "additionalProperties": true
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "parameters": { "type": "object" }
+        },
+        "required": ["id","parameters"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["global","roles"],
+  "additionalProperties": false
+}

@@ -1,0 +1,222 @@
+{
+  "version": "0.1.0-inc1",
+  "notes": "Full MVP catalog for Increment-1: atomic roles and composite archetypes used by the wizard and generators.",
+  "roles": [
+    {
+      "id": "role-ad-ds",
+      "name": "Active Directory Domain Services",
+      "type": "atomic",
+      "category": "Core Infrastructure",
+      "description": "Install or extend AD DS domain/forest.",
+      "parameters": [
+        { "key": "DomainName", "reuseId": "ad.domain", "type": "string", "required": true },
+        { "key": "NetBIOSName", "reuseId": "ad.netbios", "type": "string", "required": true },
+        { "key": "SafeModeAdminSecret", "reuseId": "ad.dsrmp", "type": "string", "required": true }
+      ],
+      "dependencies": ["role-dns","role-ntp"]
+    },
+    {
+      "id": "role-dns",
+      "name": "DNS Server",
+      "type": "atomic",
+      "category": "Core Infrastructure",
+      "description": "Windows DNS server configuration.",
+      "parameters": [
+        { "key": "DnsForwarders", "reuseId": "dns.forwarders", "type": "array", "items": { "type": "string" }, "required": false }
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "role-ntp",
+      "name": "NTP Service",
+      "type": "atomic",
+      "category": "Core Infrastructure",
+      "description": "Time synchronization configuration.",
+      "parameters": [ { "key": "NtpServers", "reuseId": "ntp.servers", "type": "array", "items": { "type": "string" }, "required": false } ],
+      "dependencies": []
+    },
+    {
+      "id": "role-dhcp",
+      "name": "DHCP Server",
+      "type": "atomic",
+      "category": "Core Infrastructure",
+      "description": "DHCP scopes and reservations.",
+      "parameters": [ { "key": "Scopes", "reuseId": "dhcp.scopes", "type": "array", "items": { "type": "object" }, "required": false } ],
+      "dependencies": ["role-dns"]
+    },
+    {
+      "id": "role-fileserver",
+      "name": "File Server",
+      "type": "atomic",
+      "category": "File & Storage",
+      "description": "Create volumes, SMB shares and ACL templates.",
+      "parameters": [ { "key": "Shares", "reuseId": "fs.shares", "type": "array", "items": { "type": "object" }, "required": false } ],
+      "dependencies": []
+    },
+    {
+      "id": "role-dfsn",
+      "name": "DFS Namespace / Replication",
+      "type": "atomic",
+      "category": "File & Storage",
+      "description": "Configure DFS Namespaces and optional DFSR groups.",
+      "parameters": [ { "key": "Namespaces", "reuseId": "dfsn.namespaces", "type": "array", "items": { "type": "object" }, "required": false } ],
+      "dependencies": ["role-fileserver"]
+    },
+    {
+      "id": "role-iis",
+      "name": "IIS Web Server",
+      "type": "atomic",
+      "category": "Web & App",
+      "description": "Install IIS and configure sites/bindings.",
+      "parameters": [ { "key": "Sites", "reuseId": "iis.sites", "type": "array", "items": { "type": "object" }, "required": false } ],
+      "dependencies": []
+    },
+    {
+      "id": "role-iis-pki",
+      "name": "IIS PKI Publishing",
+      "type": "atomic",
+      "category": "Web & App",
+      "description": "Publish PKI endpoints (CRL/AIA) via IIS.",
+      "parameters": [ { "key": "SiteName", "reuseId": "pkipub.site", "type": "string", "required": false } ],
+      "dependencies": ["role-iis","role-pki"]
+    },
+    {
+      "id": "role-pki",
+      "name": "PKI (AD CS)",
+      "type": "atomic",
+      "category": "Security",
+      "description": "Deploy Root and Issuing CAs.",
+      "parameters": [ { "key": "RootCACommonName", "reuseId": "pki.root.cn", "type": "string", "required": true } ],
+      "dependencies": ["role-iis-pki"]
+    },
+    {
+      "id": "role-sql",
+      "name": "SQL Server",
+      "type": "atomic",
+      "category": "Database",
+      "description": "Install SQL Server instance for application databases.",
+      "parameters": [ { "key": "InstanceName", "reuseId": "sql.instance", "type": "string", "required": true } ],
+      "dependencies": []
+    },
+    {
+      "id": "role-wsus",
+      "name": "WSUS",
+      "type": "atomic",
+      "category": "Management",
+      "description": "Windows Server Update Services installation.",
+      "parameters": [ { "key": "ContentDir", "reuseId": "wsus.content", "type": "string", "required": true } ],
+      "dependencies": ["role-iis","role-sql"]
+    },
+    {
+      "id": "role-exchange",
+      "name": "Exchange Server",
+      "type": "atomic",
+      "category": "Enterprise Applications",
+      "description": "Exchange Mailbox role (installation skeleton).",
+      "parameters": [ { "key": "SetupMediaPath", "reuseId": "ex.media", "type": "string", "required": true } ],
+      "dependencies": ["role-iis","role-pki","role-sql"]
+    },
+    {
+      "id": "role-nps",
+      "name": "Network Policy Server (RADIUS)",
+      "type": "atomic",
+      "category": "Security",
+      "description": "RADIUS/NPS server configuration.",
+      "parameters": [ { "key": "RadiusClients", "reuseId": "nps.clients", "type": "array", "items": { "type": "object" }, "required": false } ],
+      "dependencies": ["role-sql"]
+    },
+    {
+      "id": "role-rras",
+      "name": "Routing and Remote Access (VPN)",
+      "type": "atomic",
+      "category": "Network",
+      "description": "Configure RRAS for VPN and routing.",
+      "parameters": [ { "key": "VpnType", "reuseId": "rras.vpnType", "type": "string", "required": false } ],
+      "dependencies": ["role-nps"]
+    },
+    {
+      "id": "role-vas",
+      "name": "Volume Activation Services (KMS)",
+      "type": "atomic",
+      "category": "Management",
+      "description": "Configure KMS host for volume activation.",
+      "parameters": [ { "key": "KmsHostKeySecret", "reuseId": "kms.hostKey", "type": "string", "required": true } ],
+      "dependencies": []
+    },
+    {
+      "id": "role-scom",
+      "name": "System Center Operations Manager",
+      "type": "atomic",
+      "category": "Enterprise Applications",
+      "description": "SCOM Management Server (installation skeleton).",
+      "parameters": [ { "key": "ManagementGroupName", "reuseId": "scom.mg", "type": "string", "required": true } ],
+      "dependencies": ["role-sql"]
+    },
+    {
+      "id": "role-sharepoint",
+      "name": "SharePoint Server",
+      "type": "atomic",
+      "category": "Enterprise Applications",
+      "description": "SharePoint farm setup (skeleton).",
+      "parameters": [ { "key": "FarmAccountSecret", "reuseId": "sp.farm.secret", "type": "string", "required": true } ],
+      "dependencies": ["role-sql","role-iis"]
+    },
+    {
+      "id": "role-mecm",
+      "name": "Microsoft Endpoint Configuration Manager (MECM)",
+      "type": "atomic",
+      "category": "Enterprise Applications",
+      "description": "ConfigMgr primary site (skeleton).",
+      "parameters": [ { "key": "SiteCode", "reuseId": "mecm.siteCode", "type": "string", "required": true } ],
+      "dependencies": ["role-sql","role-iis","role-wsus"]
+    },
+    {
+      "id": "role-hyperv",
+      "name": "Hyper-V Host",
+      "type": "atomic",
+      "category": "Virtualization",
+      "description": "Prepare Hyper-V role on the host.",
+      "parameters": [],
+      "dependencies": []
+    },
+    {
+      "id": "role-aux",
+      "name": "Remote Management Helpers",
+      "type": "atomic",
+      "category": "Management",
+      "description": "Configure RDP/WinRM and management firewall rules.",
+      "parameters": [ { "key": "EnableRDP", "reuseId": "aux.rdp", "type": "boolean", "required": false } ],
+      "dependencies": []
+    },
+    {
+      "id": "arch-domain-controller",
+      "name": "Domain Controller Archetype",
+      "type": "composite",
+      "category": "Archetypes",
+      "description": "AD DS + DNS + NTP",
+      "includes": ["role-ad-ds","role-dns","role-ntp"],
+      "parameters": [],
+      "dependencies": ["role-ad-ds","role-dns","role-ntp"]
+    },
+    {
+      "id": "arch-fileserver",
+      "name": "File Server Archetype",
+      "type": "composite",
+      "category": "Archetypes",
+      "description": "File server with optional DFS replication",
+      "includes": ["role-fileserver","role-dfsn"],
+      "parameters": [],
+      "dependencies": ["role-fileserver","role-dfsn"]
+    },
+    {
+      "id": "arch-wsus",
+      "name": "WSUS Archetype",
+      "type": "composite",
+      "category": "Archetypes",
+      "description": "IIS + WSUS + SQL (optional)",
+      "includes": ["role-iis","role-wsus","role-sql"],
+      "parameters": [],
+      "dependencies": ["role-iis","role-wsus"]
+    }
+  ]
+}

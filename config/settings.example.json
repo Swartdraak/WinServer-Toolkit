@@ -1,0 +1,59 @@
+{
+  "global": {
+    "Org": "ExampleCorp",
+    "Environment": "Lab",
+    "ArtifactStageRoot": "C:\\Stage",
+    "AllowDownloads": false,
+    "Proxy": { "Http": "", "Https": "" }
+  },
+  "roles": [
+    {
+      "id": "role-ad-ds",
+      "parameters": {
+        "DomainName": "example.local",
+        "NetBIOSName": "EXAMPLE",
+        "SafeModeAdminSecret": "secret://ExampleCorp/AD/DSRM",
+        "SiteName": "Default-First-Site-Name"
+      }
+    },
+    {
+      "id": "role-dns",
+      "parameters": {
+        "DnsForwarders": [ "8.8.8.8", "8.8.4.4" ]
+      }
+    },
+    {
+      "id": "role-ntp",
+      "parameters": {
+        "NtpServers": [ "time.windows.com", "time.nist.gov" ]
+      }
+    },
+    {
+      "id": "role-fileserver",
+      "parameters": {
+        "Shares": [ { "Name": "Data", "Path": "D:\\Data", "Grants": [ { "Principal": "DOMAIN\\Everyone", "Rights": "Read" } ] } ]
+      }
+    },
+    {
+      "id": "role-wsus",
+      "parameters": {
+        "ContentDir": "C:\\WSUSContent",
+        "SqlInstance": ""
+      }
+    },
+    {
+      "id": "role-sql",
+      "parameters": {
+        "InstanceName": "MSSQLSERVER",
+        "SaSecret": "secret://ExampleCorp/SQL/sa"
+      }
+    },
+    {
+      "id": "role-mecm",
+      "parameters": {
+        "SiteCode": "ABC",
+        "SiteName": "MECM-Lab"
+      }
+    }
+  ]
+}

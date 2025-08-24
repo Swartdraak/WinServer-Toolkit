@@ -13,7 +13,8 @@
         "DomainName": "example.local",
         "NetBIOSName": "EXAMPLE",
         "SafeModeAdminSecret": "secret://ExampleCorp/AD/DSRM",
-        "SiteName": "Default-First-Site-Name"
+        "SiteName": "Default-First-Site-Name",
+        "PromoteType": "newforest"
       }
     },
     {
@@ -38,7 +39,7 @@
       "id": "role-wsus",
       "parameters": {
         "ContentDir": "C:\\WSUSContent",
-        "SqlInstance": ""
+        "SqlInstance": "MSSQLSERVER"
       }
     },
     {
@@ -52,7 +53,13 @@
       "id": "role-mecm",
       "parameters": {
         "SiteCode": "ABC",
-        "SiteName": "MECM-Lab"
+        "SiteServerFQDN": "mecm-lab.example.local"
+      }
+    },
+    {
+      "id": "role-aux",
+      "parameters": {
+        "EnableRDP": true
       }
     }
   ]

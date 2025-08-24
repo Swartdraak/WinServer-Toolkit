@@ -10,7 +10,11 @@
         "Environment": { "type": "string" },
         "ArtifactStageRoot": { "type": "string" },
         "AllowDownloads": { "type": "boolean" },
-        "Proxy": { "type": "object", "properties": { "Http": { "type": "string" }, "Https": { "type": "string" } }, "additionalProperties": false }
+        "Proxy": {
+          "type": "object",
+          "properties": { "Http": { "type": "string" }, "Https": { "type": "string" } },
+          "additionalProperties": false
+        }
       },
       "required": ["Org","Environment","ArtifactStageRoot"],
       "additionalProperties": true
@@ -21,7 +25,13 @@
         "type": "object",
         "properties": {
           "id": { "type": "string" },
-          "parameters": { "type": "object" }
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true,
+            "patternProperties": {
+              ".*Secret$": { "type": "string", "pattern": "^secret:\\/\\/.+" }
+            }
+          }
         },
         "required": ["id","parameters"],
         "additionalProperties": false

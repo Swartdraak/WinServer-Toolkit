@@ -1,0 +1,41 @@
+name: CI - Wiki Lint
+
+on:
+  pull_request:
+    paths:
+      - 'winserver-toolkit.wiki/**'
+
+jobs:
+  wiki-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PowerShell
+        uses: actions/setup-powershell@v2
+      - name: Run wiki-lint script
+        run: pwsh -File scripts/wiki-lint.ps1 -Path 'winserver-toolkit.wiki' -Report 'reports/wiki-lint.csv'
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: wiki-lint-report
+          path: reports/wiki-lint.csv
+      - name: Read report into output
+        id: read-report
+        shell: bash
+        run: |
+          if [ -f reports/wiki-lint.csv ]; then
+            # Safely load the report content into the step output so it can be used in the comment
+            echo "report<<EOF" >> $GITHUB_OUTPUT
+            sed 's/\\r$//' reports/wiki-lint.csv >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "report=No report generated" >> $GITHUB_OUTPUT
+          fi
+      - name: Post PR comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            Wiki Lint Report:
+
+            ${{ steps.read-report.outputs.report }}

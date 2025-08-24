@@ -18,6 +18,21 @@ Quick how-to (CP / AID / Wiki edits):
 3. Update the page footer: set `Status`, `Owner`, `Updated` (`YYYY-MM-DD`) and bump `Version` if semantics changed.
 4. Push a regular PR to `dev` and use the PR template; CI will warn on missing footers or evidence link format issues.
 
+### Running checks locally
+Run repository tests locally before opening a PR:
+
+Pester & PSScriptAnalyzer (PowerShell):
+```powershell
+pwsh -Command "Install-Module -Name Pester -Scope CurrentUser -Force"
+pwsh -Command "Install-Module -Name PSScriptAnalyzer -Scope CurrentUser -Force"
+pwsh -File ./tests/run-all.ps1    # if present; otherwise run Invoke-Pester and Invoke-ScriptAnalyzer manually
+```
+
+Wiki lint (local):
+```powershell
+pwsh ./scripts/wiki-lint.ps1 -Path '..\winserver-toolkit.wiki' -Report 'reports\wiki-lint.csv'
+```
+
 ## Filing Issues
 - Use the templates under `.github/ISSUE_TEMPLATE/`.
 - Include: version/commit, OS (2019/2022), steps, expected/actual, redacted logs.

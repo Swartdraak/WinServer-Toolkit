@@ -18,4 +18,7 @@ Planning docs and GitHub repository artifacts. Implementation happens in separat
 7. MECM (baseline)  
 8. MVP Polish & Docs Freeze
 
+[![PR Checklist](https://img.shields.io/badge/PR%20Checklist-Required-blue)](.github/PULL_REQUEST_TEMPLATE.md)
+
+
 See [MVP-Increment-Plans.md](docs/MVP-Increment-Plans.md) and [Increment-1-Plan.md](Increment-1-Plan.md) for details.

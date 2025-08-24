@@ -1,23 +1,51 @@
 # Copilot Instructions — WinServer-Toolkit
 
-## Intent
-PowerShell-first toolkit to 1) harden Server (Core-friendly) into a template, then 2) build configured hosts from `config/settings.json` + selected archetypes.
+## Purpose
+Implement the MVP (Inc1→Inc8) in feature branches, obeying the Wiki as canonical, and gate each increment with analyzers/tests before advancing.
 
-Security-first: DISA STIG default (WS2019 v3r5, WS2022 v2r5). Idempotent. Privacy-safe logging. Offline by default unless `-AllowDownloads` is set.
+## Canonical Sources & Precedence
+Planning → **Wiki (canonical)** → Contracts (schema+catalog) → Implementation outputs → Code & Progress Reference.  
+If information is missing, append an RFCX row (strict table) in the Wiki.
 
-## Landmarks
-- `archetypes/catalog.json`: role catalog (parameters, prompts, validation, `reuseId`, dependencies). No env values.
-- `config/settings.example.json`: example values for all settings (global + per-role). Used **only** if admin leaves prompt blank.
-- `config/settings.schema.json`: strict schema; unknown keys fail.
-- `scripts/entrypoints/`: thin user entry scripts.
-- `lib/Common.psm1`: shared helpers.
-- `docs/`: usage, configuration, workflows, security, definitions.
+## Branching & Commits
+- Branch per increment: `feature/inc<NN>-<topic>`.
+- Conventional Commits (`feat(inc1): …`).
+- Open a PR at the end of each increment; do not self-merge.
 
-## Conventions
-- Idempotent; -WhatIf/-NoApply; JSON-lines + transcript logging (no secrets).
-- Secrets via SecretManagement + CredMan: `secret://<Org>/<Service>/<Purpose>`.
-- Offline-first: search `C:\Stage` unless `-AllowDownloads` is used.
-- De-dup prompts with `reuseId`; validate via schema; write `config/settings.json`.
+## Canonical Paths
+- `archetypes/catalog.json` — role contracts (no env values; include `reuseId`).
+- `config/settings.schema.json` — strict; top-level `global` + `roles`; `additionalProperties:false`.
+- `config/settings.example.json` — fallback-only (never secrets; use `secret://<Org>/<Service>/<Purpose>`).
+- `scripts/entrypoints/` — all user-facing entry scripts; `SupportsShouldProcess`; honor `-WhatIf`.
+- `lib/Common.psm1` — helpers (JSON IO; stage discovery; JSONL logger).
+- `tests/` — Pester tests; fixtures in `tests/Data`.
 
-## Tests & Docs
-- Pester + PSSA; docs must be updated with any param/behavior changes.
+## Quality & Gates
+- PSScriptAnalyzer = **0 errors**; Pester = **all tests pass**.
+- STIG-first (WS2019 v3r5; WS2022 v2r5). Offline-by-default: search `C:\Stage`; only download with `-AllowDownloads`.
+- Idempotent behavior; -WhatIf parity for entry scripts.
+- Update Wiki pages and trackers for every artifact.
+
+## IDs & Ownership
+- IDs use **America/Anchorage** local date: `YYYYMMDD-###`.
+- AID rows: set `Owner_Chat` to the active implementation chat; Version_Commit = “Pending commit” until merged.
+- Page ownership passes to the implementing chat when a change is approved.
+
+## Trackers (strict tables; evidence = links-only)
+- RFCX Queue — context needs
+- CP Register — policy/plan changes
+- Master AID Index — artifact identity/evidence
+Auto-labels: configure `.github/labeler.yml`; CI workflow applies labels.
+
+## Increment Loop
+1) Read Wiki core pages.
+2) RFCX if context missing; CP for plan/doc changes; await approval.
+3) Implement artifacts at canonical paths (+ `.gitkeep` as needed).
+4) Add/update tests and fixtures.
+5) Run analyzers/tests and fix all issues.
+6) Append AID rows in the Wiki (links-only).
+7) Open a PR; request @Swartdraak; include gate checklist and links.
+
+## Do / Do Not
+- Do: keep edits in repo + Wiki; follow canonical paths; log RFCX/CP/AID rows.
+- Do not: push to main; recreate Approved/Review artifacts without CP; log/commit secrets.

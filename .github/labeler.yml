@@ -1,0 +1,20 @@
+area/archetypes:
+  - 'archetypes/**'
+  - 'scripts/roles/**'
+
+area/security:
+  - 'docs/Security.md'
+  - 'data/baselines/**'
+  - 'data/baselines/stig/**'
+  - 'lib/**'
+
+area/bootstrap:
+  - 'scripts/entrypoints/**'
+  - '.github/**'
+
+type/tests:
+  - 'tests/**'
+
+type/docs:
+  - 'docs/**'
+  - '**/*.md'
